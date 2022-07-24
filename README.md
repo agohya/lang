@@ -2,7 +2,7 @@
 
 ## The upcoming (under-development) programming language by NBRG Developers
 
-### We are actively looking for collaborator for this open source, community-driven programming language. For contributing, see [CONTRIBUTING.md](https://github.com/agohya/lang/tree/master/CONTRIBUTING.md)
+### We are actively looking for collaborators for this open source, community-driven programming language. For contributing, see [CONTRIBUTING.md](https://github.com/agohya/lang/tree/master/CONTRIBUTING.md)
 
 ### Features (Proposed)
 
