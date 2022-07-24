@@ -25,7 +25,7 @@
 
 We are keen on using the following tech-stack to keep this language as modern and fast as possible.
 
-### Agohya Lang is going to be a AOT compiled language with support for JIT compilation in debug mode
+### Agohya Lang is going to be an AOT compiled language with support for JIT compilation in debug mode
 
 * Antlr4 to generate Lexer/Parser.
 * Own implementation for generating AST which will be used in the next step.
