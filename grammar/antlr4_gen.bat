@@ -1,0 +1,2 @@
+antlr4 -o D:\agohya\lang\dart-lp\lib\antlr4_gen -Dlanguage=Dart D:\agohya\lang\grammar\AgohyaLexer.g4 -visitor -no-listener
+antlr4 -o D:\agohya\lang\dart-lp\lib\antlr4_gen -Dlanguage=Dart D:\agohya\lang\grammar\AgohyaParser.g4 -visitor -no-listener

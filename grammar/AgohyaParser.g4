@@ -18,3 +18,51 @@ options {
 }
 
 // TODO: Implement parser rules.
+
+prog:
+	packageDecl NEWLINE? statement+ EOF
+	;
+
+packageDecl:
+	PACKAGE LetterOrDigitOrDotOrUnderscore ';'
+	;
+
+statement:
+	/* import
+ | decl
+ | initializer
+ |
+	 */
+	NEWLINE
+	;
+
+decl:
+	(primitiveType | classType) IDENTIFIER ';'
+	| nullableType IDENTIFIER ';'
+	| (primitiveType | classType) IDENTIFIER ASSIGN (
+		IDENTIFIER
+		| DECIMAL_LITERAL
+		| DOUBLE_LITERAL
+		| HEX_LITERAL
+		| STRING_LITERAL
+		| BOOL_LITERAL
+	)
+	| nullableType IDENTIFIER ASSIGN (
+		IDENTIFIER
+		| DECIMAL_LITERAL
+		| DOUBLE_LITERAL
+		| HEX_LITERAL
+		| STRING_LITERAL
+		| BOOL_LITERAL
+		| NULL_LITERAL
+	)
+	;
+
+nullableType: (primitiveType | classType) '?'
+	;
+
+primitiveType:
+	INT
+	| DOUBLE
+	| BOOL
+	;

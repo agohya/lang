@@ -1,179 +1,49 @@
-/* 
+/* * 
  NBRG Public Works License V1
  Copyright (c) 2022 NBRG Developers, NBRG Group Pvt. Ltd.
  
  Copy
  of this License can be obtained at https://nbrg-developers.web.app/license/v1
  
- NOTE: This
- license
- allows the original creator to change the license to another verison of the NBRG Public
- Works
- License V1, but not to another license altogether.
+ Agohya
+ Project can be found at https://nbrg-developers.web.app/agohya/
+ 
+ NOTE: This license allows the
+ original creator to change the license to another verison of the 
+ NBRG Public Works License
+ without notice,
+ but not to another license altogether.
  */
 lexer grammar AgohyaLexer;
 
-// Keywords
-ABSTRACT:
-	'abstract'
-	;
+// Types Primitive Type
 
-ASSERT:
-	'assert'
-	;
+// Other Types
 
-BOOL:
-	'bool'
-	;
+// Operators
 
-BREAK:
-	'break'
-	;
+// MODIFIERS
 
-CASE:
-	'case'
-	;
+// TODO: Keywords
 
-CATCH:
-	'catch'
-	;
-
-CLASS:
-	'class'
-	;
-
-CONST:
-	'const'
-	;
-
-CONTINUE:
-	'continue'
-	;
-
-DEFAULT:
-	'default'
-	;
-
-DO:
-	'do'
-	;
-
-DOUBLE:
-	'double'
-	;
-
-ELSE:
-	'else'
-	;
-
-ENUM:
-	'enum'
-	;
-
-EXTENDS:
-	'extends'
-	;
-
-FINAL:
-	'final'
-	;
-
-FOR:
-	'for'
-	;
-
-IF:
-	'if'
-	;
-
-IMPLEMENTS:
-	'implements'
-	;
-
-IMPORT:
-	'import'
-	;
-
-INT:
-	'int'
-	;
-
-/// Equivalent to java's instanceof
-IS:
-	'is'
-	;
-
-NEW:
-	'new'
-	;
-
-/// Does not support Java-style package variables, but this is used as the package declaration.
-PACKAGE:
-	'package'
-	;
-
-/// visibility private (only in the current file)
-PRIVATE:
-	'private'
-	;
-
-/// Visibility public (accessible by all)
-PUBLIC:
-	'public'
-	;
-
-RETURN:
-	'return'
-	;
-
-STATIC:
-	'static'
-	;
-
-SUPER:
-	'super'
-	;
-
-SWITCH:
-	'switch'
-	;
-
-THIS:
-	'this'
-	;
-
-THROW:
-	'throw'
-	;
-
-TRY:
-	'try'
-	;
-
-VOID:
-	'void'
-	;
-
-WHILE:
-	'while'
-	;
-
-/// Defined Literals
+// Literals
 
 BOOL_LITERAL:
 	'true'
 	| 'false'
 	;
 
-DECIMAL_LITERAL: ('0' | [1-9] (Digits? | '_'+ Digits)) [lL]?
-	;
-
-DOUBLE_LITERAL: (Digits '.' Digits? | '.' Digits) ExponentPart? [fFdD]?
-	| Digits (ExponentPart [fFdD]? | [fFdD])
+DOUBLE_LITERAL:
+	[-]? Digits '.' Digits
+	| [-]? '.' Digits
 	;
 
 HEX_LITERAL:
-	'0' [xX] [0-9a-fA-F] ([0-9a-fA-F_]* [0-9a-fA-F])? [lL]?
+	'0' [xX] HexDigits
+	;
+
+INT_LITERAL:
+	[-]? Digits
 	;
 
 NULL_LITERAL:
@@ -181,236 +51,71 @@ NULL_LITERAL:
 	;
 
 STRING_LITERAL:
-	'"' (~["\\\r\n] | EscapeSequence)* '"'
-	;
-
-// Separators
-
-LPAREN:
-	'('
-	;
-
-RPAREN:
-	')'
-	;
-
-LBRACE:
-	'{'
-	;
-
-RBRACE:
-	'}'
-	;
-
-LBRACK:
-	'['
-	;
-
-RBRACK:
-	']'
-	;
-
-SEMI:
-	';'
-	;
-
-COMMA:
-	','
-	;
-
-DOT:
-	'.'
-	;
-
-// Operators
-
-ASSIGN:
-	'='
-	;
-
-GT:
-	'>'
-	;
-
-LT:
-	'<'
-	;
-
-// TODO: Check this once.
-
-// BANG: '!' ;
-
-// TILDE: '~' ;
-
-QUESTION:
-	'?'
-	;
-
-COLON:
-	':'
-	;
-
-EQUAL:
-	'=='
-	;
-
-LE:
-	'<='
-	;
-
-GE:
-	'>='
-	;
-
-NOTEQUAL:
-	'!='
-	;
-
-AND:
-	'&&'
-	;
-
-OR:
-	'||'
-	;
-
-INC:
-	'++'
-	;
-
-DEC:
-	'--'
-	;
-
-ADD:
-	'+'
-	;
-
-SUB:
-	'-'
-	;
-
-MUL:
-	'*'
-	;
-
-DIV:
-	'/'
-	;
-
-BITAND:
-	'&'
-	;
-
-BITOR:
-	'|'
-	;
-
-CARET:
-	'^'
-	;
-
-MOD:
-	'%'
-	;
-
-ADD_ASSIGN:
-	'+='
-	;
-
-SUB_ASSIGN:
-	'-='
-	;
-
-MUL_ASSIGN:
-	'*='
-	;
-
-DIV_ASSIGN:
-	'/='
-	;
-
-AND_ASSIGN:
-	'&='
-	;
-
-OR_ASSIGN:
-	'|='
-	;
-
-XOR_ASSIGN:
-	'^='
-	;
-
-MOD_ASSIGN:
-	'%='
-	;
-
-LSHIFT_ASSIGN:
-	'<<='
-	;
-
-RSHIFT_ASSIGN:
-	'>>='
-	;
-
-/// Redirect output of statement to return value or lambda function
-ARROW:
-	'=>'
-	;
-
-// Whitespace and comments
-
-WS:
-	[ \t\r\n\u000C]+ -> channel(HIDDEN)
-	;
-
-COMMENT:
-	'/*' .*? '*/' -> channel(HIDDEN)
-	;
-
-LINE_COMMENT:
-	'//' ~[\r\n]* -> channel(HIDDEN)
+	'\'' (~[\\\r\n'] | EscapeSequence) '\''
+	| '"' (~[\\\r\n'] | EscapeSequence) '"'
 	;
 
 // Identifiers
 
 IDENTIFIER:
-	Letter LetterOrDigit*
+	Letter (LetterOrDigit | '_')*
 	;
 
-// Fragment rules
-
-fragment ExponentPart:
-	[eE] [+-]? Digits
-	;
+// Fragments 
 
 fragment EscapeSequence:
 	'\\' [btnfr"'\\]
 	| '\\' ([0-3]? [0-7])? [0-7]
-	| '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+	| '\\' UnicodeLetter
 	;
 
 fragment HexDigits:
-	HexDigit ((HexDigit | '_')* HexDigit)?
-	;
-
-fragment HexDigit:
-	[0-9a-fA-F]
+	HexDigit HexDigit*
 	;
 
 fragment Digits:
-	[0-9] ([0-9_]* [0-9])?
+	Digit+
+	;
+
+fragment Letters:
+	Letter+
 	;
 
 fragment LetterOrDigit:
 	Letter
-	| [0-9]
+	| Digit
+	;
+
+fragment UnicodeLetter:
+	'u'+ HexDigit HexDigit HexDigit HexDigit
 	;
 
 fragment Letter:
-	[a-zA-Z$_] // these are the "java letters" below 0x7F
-	| ~[\u0000-\u007F\uD800-\uDBFF] // covers all characters above 0x7F which are not a surrogate
-	| [\uD800-\uDBFF] [\uDC00-\uDFFF]
-	// covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
+	[a-zA-Z]
+	;
+
+fragment Digit:
+	[0-9]
+	;
+
+fragment Underscore:
+	'_'
+	;
+
+fragment Dollar:
+	'$'
+	;
+
+fragment QuestionMark:
+	'?'
+	;
+
+fragment Dot:
+	'.'
+	;
+
+// fragment HexDigits: HexDigit ((HexDigit | '_')* HexDigit)? ;
+
+fragment HexDigit:
+	[0-9a-fA-F]
 	;
