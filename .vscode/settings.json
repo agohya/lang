@@ -10,31 +10,6 @@
         "visualParseTreeHorizontal": true,
         "visualParseTreeClustered": false
     },
-    "antlr4.format": {
-        "alignTrailingComments": false,
-        "allowShortBlocksOnASingleLine": true,
-        "breakBeforeBraces": false,
-        "columnLimit": 100,
-        "continuationIndentWidth": 4,
-        "indentWidth": 4,
-        "keepEmptyLinesAtTheStartOfBlocks": false,
-        "maxEmptyLinesToKeep": 1,
-        "reflowComments": true,
-        "spaceBeforeAssignmentOperators": true,
-        "tabWidth": 4,
-        "useTab": true,
-        "alignColons": "none",
-        "singleLineOverrulesHangingColon": true,
-        "allowShortRulesOnASingleLine": false,
-        "alignSemicolons": "hanging",
-        "breakBeforeParens": false,
-        "ruleInternalsOnSingleLine": false,
-        "minEmptyLines": 0,
-        "groupedAlignments": true,
-        "alignFirstTokens": false,
-        "alignLexerCommands": false,
-        "alignActions": false,
-        "alignLabels": true,
-        "alignTrailers": false
-    }
+    "editor.tabCompletion": "on",
+  "editor.snippetSuggestions": "top"
 }
