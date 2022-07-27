@@ -1,0 +1,20 @@
+out/**
+intermediate/**
+
+# Comment this out if you want to check in the executables/apps into VCS
+builds/**
+
+# Add this line if:
+# 1) You use Intellij Based IDEs such as Intellij IDEA or Android Studio
+# 2) You want to remove Intellij IDE's config files for your project from VCS
+# .idea/**
+
+# Add this line if:
+# 1) You use VSCode
+# 2) You want to remove VSCode's config files for your project from VCS
+# .vscode/**
+
+# Add this line if:
+# 1) You use Agohya's IDE
+# 2) You want to remove Agohya's IDE specifications for your project from VCS
+# .agoide/**

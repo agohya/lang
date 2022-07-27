@@ -1,0 +1,13 @@
+lib 'sample_dev_as_you_go';
+
+void main(List<String>? args) async {
+    startApp(SampleDevAsYouGoApp());
+}
+
+class SampleDevAsYouGoApp extends View {
+    @override
+    void createView() {}
+
+    @override
+    void destroyView() {}
+}

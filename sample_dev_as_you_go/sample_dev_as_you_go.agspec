@@ -1,0 +1,43 @@
+project: {
+    name: "sample_dev_as_you_go",
+    options: NIL,
+    developer: {
+        name: "NBRG Developers",
+        type: Startup # Possible Values: Startup, Corporate, Individual
+
+        # Developer's website
+        website: "https://nbrg-developers.web.app/",
+    },
+    appOptions: {
+        userFacingName: "Sample Dev App",
+
+        # app's website
+        website: "https://nbrg-developers.web.app/sample_dev_as_you_go",
+        privacyPolicy: "https://nbrg-developers.web.app/sample_dev_as_you_go/privacy-policy",
+        termsOfUse: "https://nbrg-developers.web.app/sample_dev_as_you_go/termsOfService",
+    },
+    packages: {
+        # AppPackages are used and included in the final bundle or program
+        appPackages: [
+            # the spec must include either console or ui for a console/ui app respectively. This is auto added when you use 
+            # agohya create command.
+            console: sdk,
+            ui: sdk,
+            samplePack: {
+                ver: 41,
+                source: agoman, # Agoman is agohya's package manager, possible values are: agoman, git
+
+                #optional, if you set source as git, you must specify gitOptions
+                gitOptions: {
+                    repo: https://github.com/userororg/repoName.git,
+                }
+            }
+        ],
+
+        # DevPackages are not included in the final bundle or program, but are useful as they might do code gen for you.
+        devPackages: {
+            # test is always included.
+            test: sdk,
+        }
+    }
+}
