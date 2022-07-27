@@ -103,14 +103,6 @@ IN:
 	COLON
 	;
 
-COLON:
-	':'
-	;
-
-SEMICOLON:
-	';'
-	;
-
 LESS_THAN:
 	'<'
 	;
@@ -447,6 +439,32 @@ NEWLINE:
 	| '\r'
 	;
 
+// SUB Parts
+
+Underscore:
+	'_'
+	;
+
+Dollar:
+	'$'
+	;
+
+QuestionMark:
+	'?'
+	;
+
+Dot:
+	'.'
+	;
+
+COLON:
+	':'
+	;
+
+SEMICOLON:
+	';'
+	;
+
 // Fragments 
 
 fragment EscapeSequence:
@@ -482,26 +500,6 @@ fragment Letter:
 
 fragment Digit:
 	[0-9]
-	;
-
-fragment Underscore:
-	'_'
-	;
-
-fragment Dollar:
-	'$'
-	;
-
-fragment QuestionMark:
-	'?'
-	;
-
-fragment Dot:
-	'.'
-	;
-
-fragment InOrColon:
-	':'
 	;
 
 // fragment HexDigits: HexDigit ((HexDigit | '_')* HexDigit)? ;

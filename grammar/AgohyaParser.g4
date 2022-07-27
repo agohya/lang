@@ -27,14 +27,14 @@ prog:
 
 // For example, | 1) lib 'sampleapp'; 2) lib 'sample_app'; 3) lib 'sample2app'; | For subfiles under
 // the project, This can be set to | 1) lib 'sampleapp.subfolder.fileName'; 2) lib
-// 'sampleapp.anyNoOfSub_Folders.fileName'; |
+// 'sampleapp.any.No_Of.Sub.Folders.fileName'; |
 libDecl:
 	LIB LIB_LITERAL SEMICOLON
 	;
 
 statement:
 	importRule
-	| decl
+	| declaration
 	| initializer
 	| NEWLINE
 	;
@@ -43,7 +43,11 @@ importRule:
 	IMPORT IMPORT_LITERAL SEMICOLON
 	;
 
-decl:
+declaration:
+	variableDeclaration
+	;
+
+variableDeclaration:
 	(primitiveType | classType) IDENTIFIER SEMICOLON
 	| nullableType IDENTIFIER SEMICOLON
 	| (primitiveType | classType) IDENTIFIER ASSIGN (
@@ -90,12 +94,25 @@ initializer:
 	) SEMICOLON
 	;
 
-// TODO: Fix this newObjDeclaration rule
-newObjDeclaration:
-	CLASS
+classDeclaration:
+	CLASS IDENTIFIER typeParameters? (EXTENDS typeList)? (
+		IMPLEMENTS typeList
+	)? classBody
 	;
 
-nullableType: (primitiveType | classType) '?'
+classBody:
+	CURL_BRACK_OPEN classBodyDeclaration CURL_BRACK_OPEN
+	;
+
+classBodyDeclaration:
+	;
+
+// TODO: Fix this newObjDeclaration rule
+newObjDeclaration:
+	CLASS CLASS_NAME EXTENDS?
+	;
+
+nullableType: (primitiveType | classType) QuestionMark
 	;
 
 primitiveType:
