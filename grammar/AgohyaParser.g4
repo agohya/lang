@@ -19,43 +19,80 @@ options {
 
 // TODO: Implement parser rules.
 
+// The start rule.
 prog:
-	packageDecl NEWLINE? statement+ EOF
+	libDecl NEWLINE? statement* EOF
+	| EOF
 	;
 
-packageDecl:
-	PACKAGE LetterOrDigitOrDotOrUnderscore ';'
+// For example, | 1) lib 'sampleapp'; 2) lib 'sample_app'; 3) lib 'sample2app'; | For subfiles under
+// the project, This can be set to | 1) lib 'sampleapp.subfolder.fileName'; 2) lib
+// 'sampleapp.anyNoOfSub_Folders.fileName'; |
+libDecl:
+	LIB LIB_LITERAL SEMICOLON
 	;
 
 statement:
-	/* import
- | decl
- | initializer
- |
-	 */
-	NEWLINE
+	importRule
+	| decl
+	| initializer
+	| NEWLINE
+	;
+
+importRule:
+	IMPORT IMPORT_LITERAL SEMICOLON
 	;
 
 decl:
-	(primitiveType | classType) IDENTIFIER ';'
-	| nullableType IDENTIFIER ';'
+	(primitiveType | classType) IDENTIFIER SEMICOLON
+	| nullableType IDENTIFIER SEMICOLON
 	| (primitiveType | classType) IDENTIFIER ASSIGN (
 		IDENTIFIER
-		| DECIMAL_LITERAL
+		| INT_LITERAL
 		| DOUBLE_LITERAL
 		| HEX_LITERAL
 		| STRING_LITERAL
 		| BOOL_LITERAL
-	)
+		| newObjDeclaration
+	) SEMICOLON
 	| nullableType IDENTIFIER ASSIGN (
 		IDENTIFIER
-		| DECIMAL_LITERAL
+		| INT_LITERAL
 		| DOUBLE_LITERAL
 		| HEX_LITERAL
 		| STRING_LITERAL
 		| BOOL_LITERAL
 		| NULL_LITERAL
-	)
+		| newObjDeclaration
+	) SEMICOLON
+	;
+
+// Check this rule.
+initializer:
+	IDENTIFIER ASSIGN (
+		IDENTIFIER
+		| INT_LITERAL
+		| DOUBLE_LITERAL
+		| HEX_LITERAL
+		| STRING_LITERAL
+		| BOOL_LITERAL
+		| newObjDeclaration
+	) SEMICOLON
+	| IDENTIFIER ASSIGN (
+		IDENTIFIER
+		| INT_LITERAL
+		| DOUBLE_LITERAL
+		| HEX_LITERAL
+		| STRING_LITERAL
+		| BOOL_LITERAL
+		| NULL_LITERAL
+		| newObjDeclaration
+	) SEMICOLON
+	;
+
+// TODO: Fix this newObjDeclaration rule
+newObjDeclaration:
+	CLASS
 	;
 
 nullableType: (primitiveType | classType) '?'
@@ -65,4 +102,10 @@ primitiveType:
 	INT
 	| DOUBLE
 	| BOOL
+	;
+
+// TODO: Fix this classType rule.
+classType:
+	STRING
+	| CLASS
 	;

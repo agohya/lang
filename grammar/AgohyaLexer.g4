@@ -107,6 +107,10 @@ COLON:
 	':'
 	;
 
+SEMICOLON:
+	';'
+	;
+
 LESS_THAN:
 	'<'
 	;
@@ -424,10 +428,23 @@ STRING_LITERAL:
 	| '"' (~[\\\r\n'] | EscapeSequence) '"'
 	;
 
+LIB_LITERAL:
+	'\'' IDENTIFIER '\''
+	;
+
+IMPORT_LITERAL:
+	'\'' IDENTIFIER '\''
+	;
+
 // Identifiers
 
 IDENTIFIER:
 	Letter (LetterOrDigit | '_')*
+	;
+
+NEWLINE:
+	'\n'
+	| '\r'
 	;
 
 // Fragments 
@@ -483,7 +500,7 @@ fragment Dot:
 	'.'
 	;
 
-fragment InOrColor:
+fragment InOrColon:
 	':'
 	;
 
