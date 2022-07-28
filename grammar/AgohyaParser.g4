@@ -48,27 +48,29 @@ declaration:
 	;
 
 variableDeclaration:
-	(primitiveType | classType) IDENTIFIER SEMICOLON
-	| nullableType IDENTIFIER SEMICOLON
-	| (primitiveType | classType) IDENTIFIER ASSIGN (
-		IDENTIFIER
-		| INT_LITERAL
-		| DOUBLE_LITERAL
-		| HEX_LITERAL
-		| STRING_LITERAL
-		| BOOL_LITERAL
-		| newObjDeclaration
-	) SEMICOLON
-	| nullableType IDENTIFIER ASSIGN (
-		IDENTIFIER
-		| INT_LITERAL
-		| DOUBLE_LITERAL
-		| HEX_LITERAL
-		| STRING_LITERAL
-		| BOOL_LITERAL
-		| NULL_LITERAL
-		| newObjDeclaration
-	) SEMICOLON
+	type (IDENTIFIER | initializer)
+	;
+/* (primitiveType | classType) IDENTIFIER SEMICOLON
+ | nullableType IDENTIFIER SEMICOLON
+ |
+ (primitiveType | classType) IDENTIFIER ASSIGN (
+ IDENTIFIER
+ | INT_LITERAL
+ | DOUBLE_LITERAL
+ |
+ HEX_LITERAL
+ | STRING_LITERAL
+ | BOOL_LITERAL
+ | newObjDeclaration
+ ) SEMICOLON
+ |
+ */
+
+// basic type
+type:
+	primitiveType
+	| classType
+	| nullableType
 	;
 
 // Check this rule.
@@ -94,6 +96,18 @@ initializer:
 	) SEMICOLON
 	;
 
+nonPrimitiveTypes:
+	classType
+	| classType QuestionMark
+	;
+
+typeList:
+	nonPrimitiveTypes+
+	;
+
+typeParameters: (type COMMA)+
+	;
+
 classDeclaration:
 	CLASS IDENTIFIER typeParameters? (EXTENDS typeList)? (
 		IMPLEMENTS typeList
@@ -109,7 +123,7 @@ classBodyDeclaration:
 
 // TODO: Fix this newObjDeclaration rule
 newObjDeclaration:
-	CLASS CLASS_NAME EXTENDS?
+	CLASS classType EXTENDS?
 	;
 
 nullableType: (primitiveType | classType) QuestionMark
@@ -124,5 +138,5 @@ primitiveType:
 // TODO: Fix this classType rule.
 classType:
 	STRING
-	| CLASS
+	| IDENTIFIER
 	;

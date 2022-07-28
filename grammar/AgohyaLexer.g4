@@ -453,6 +453,10 @@ QuestionMark:
 	'?'
 	;
 
+COMMA:
+	','
+	;
+
 Dot:
 	'.'
 	;
