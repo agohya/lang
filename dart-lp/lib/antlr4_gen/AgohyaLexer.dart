@@ -1,5 +1,5 @@
 // Generated from D:\agohya\lang\grammar\AgohyaLexer.g4 by ANTLR 4.10.1
-// ignore_for_file: unused_import, unused_local_variable, prefer_single_quotes
+// ignore_for_file: unused_import, unused_local_variable, prefer_single_quotes, prefer_function_declarations_over_variables, constant_identifier_names, non_constant_identifier_names
 import 'package:antlr4/antlr4.dart';
 
 

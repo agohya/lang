@@ -16,6 +16,24 @@
  */
 lexer grammar AgohyaLexer;
 
+NON_CLASS_MODIFIER:
+	STATIC
+	| FINAL
+	| PRIVATE
+	| PUBLIC
+	;
+
+PRIMITIVE_TYPES:
+	INT
+	| DOUBLE
+	| BOOL
+	;
+
+OTHER_BUILT_IN_TYPES:
+	STRING
+	| OBJECT
+	;
+
 // Primitive Types
 
 INT:
@@ -34,6 +52,10 @@ BOOL:
 
 STRING:
 	'String'
+	;
+
+OBJECT:
+	'OBJECT'
 	;
 
 // Operators
@@ -179,7 +201,12 @@ NULLABLE_TYPE_IDENTIFIER:
 
 // Keywords & MODIFIERS
 
-// For annotation
+// Declare an Annotation
+ANNOTATION:
+	'annotation'
+	;
+
+// To annotate a class
 AT:
 	'@'
 	;
@@ -244,17 +271,14 @@ ENUM:
 	'enum'
 	;
 
-EXTENDS:
-	'extends'
+EXTENDS_OR_EXTENSION_OF:
+	COLON
 	;
 
 // This is a reserved keyword for now, as we are going to implement extensions on objects. This is
 // reserved as to not have to introduce breaking changes in future. ALso, on is a reserved keyword
 // for the same purpose. An extension, when implemented, would be defined as follows extension
 // ExtensionName on ExistingClassName {}
-EXTENSION:
-	'extension'
-	;
 
 EXTERNAL:
 	'external'
@@ -333,6 +357,14 @@ OPERATOR:
 	'operator'
 	;
 
+PRIVATE:
+	'private'
+	;
+
+PUBLIC:
+	'public'
+	;
+
 // We provide method overloading..... and hence we do not need a required keyword like dart
 RETURN:
 	'return'
@@ -393,6 +425,14 @@ MULTI_LINE_COMMENT:
 
 // Literals
 
+LITERAL:
+	BOOL_LITERAL
+	| DOUBLE_LITERAL
+	| HEX_LITERAL
+	| INT_LITERAL
+	| STRING_LITERAL
+	;
+
 BOOL_LITERAL:
 	TRUE
 	| FALSE
@@ -420,15 +460,17 @@ STRING_LITERAL:
 	| '"' (~[\\\r\n'] | EscapeSequence) '"'
 	;
 
-LIB_LITERAL:
-	'\'' IDENTIFIER '\''
-	;
-
-IMPORT_LITERAL:
-	'\'' IDENTIFIER '\''
+LIB_OR_IMPORT_LITERAL:
+	// '\'' (IDENTIFIER | '.') '\''
+	IDENTIFIER
+	| Dot
 	;
 
 // Identifiers
+
+CAPITAL_LETTER:
+	[A-Z]
+	;
 
 IDENTIFIER:
 	Letter (LetterOrDigit | '_')*

@@ -17,126 +17,92 @@ options {
 	tokenVocab = AgohyaLexer;
 }
 
-// TODO: Implement parser rules.
-
-// The start rule.
-prog:
-	libDecl NEWLINE? statement* EOF
-	| EOF
-	;
-
-// For example, | 1) lib 'sampleapp'; 2) lib 'sample_app'; 3) lib 'sample2app'; | For subfiles under
-// the project, This can be set to | 1) lib 'sampleapp.subfolder.fileName'; 2) lib
-// 'sampleapp.any.No_Of.Sub.Folders.fileName'; |
-libDecl:
-	LIB LIB_LITERAL SEMICOLON
+// Sart Rule
+file:
+	libDecl NEWLINE? importDecl* NEWLINE? statement* EOF
 	;
 
 statement:
-	importRule
-	| declaration
-	| initializer
-	| NEWLINE
+	// TODO: IMPLEMENT STATEMENT
+	NEWLINE+ (typeDecl | statement+)
 	;
 
-importRule:
-	IMPORT IMPORT_LITERAL SEMICOLON
+// Library Declaration
+libDecl:
+	LIB LIB_OR_IMPORT_LITERAL SEMICOLON
 	;
 
-declaration:
-	variableDeclaration
+// Import Declaration
+importDecl:
+	IMPORT LIB_OR_IMPORT_LITERAL SEMICOLON
 	;
 
-variableDeclaration:
-	type (IDENTIFIER | initializer)
+// TODO: Add more Type Declarations
+// Define a type such as annotation, class, enum, extension, etc.
+typeDecl:
+	annotationDecl
+	| classDecl
+	| enumDecl
+	| extensionDecl
 	;
-/* (primitiveType | classType) IDENTIFIER SEMICOLON
- | nullableType IDENTIFIER SEMICOLON
- |
- (primitiveType | classType) IDENTIFIER ASSIGN (
- IDENTIFIER
- | INT_LITERAL
- | DOUBLE_LITERAL
- |
- HEX_LITERAL
- | STRING_LITERAL
- | BOOL_LITERAL
- | newObjDeclaration
- ) SEMICOLON
- |
- */
 
-// basic type
+// Annotation declaration
+annotationDecl:
+	ANNOTATION IDENTIFIER annotationBody
+	;
+
+// Annotation Body
+annotationBody:
+	CURL_BRACK_OPEN annotationFieldDecl+ CURL_BRACK_CLOSE
+	;
+
+// Annotation Field Declaration 
+// Field declarations must be final
+annotationFieldDecl:
+	FINAL type IDENTIFIER COLON
+	(
+		LITERAL
+		| PAREN_OPEN PAREN_CLOSE
+	) SEMICOLON
+	;
+
+enumDecl:
+	ENUM classOrExtensionTypeIdentifier CURL_BRACK_OPEN enumBody CURL_BRACK_CLOSE
+	;
+
+enumBody:
+	(classOrExtensionTypeIdentifier (COLON Digit+)? COMMA)+
+	;
+
+// Here, and elsewhere, COLON means EXTENDS / EXTENSION of
+// Consider : as Extends when:
+//	1) class ClassName : ExistingClass {}
+// Consider : as EXTENSION OF when:
+//	1) ExtensionName : ExistingClass {}
+// Difference is that Extension is not a class, the methods defined in an Extension are merged with the original class's
+// Hence, you do not need to import extensions in a file when you use a method from the Extension.
+extensionDecl:
+	classOrExtensionTypeIdentifier EXTENDS_OR_EXTENSION_OF classOrExtensionTypeIdentifier
+		CURL_BRACK_OPEN classBody CURL_BRACK_CLOSE
+	;
+
+// A class declaration
+classDecl:
+	CLASS classOrExtensionTypeIdentifier
+	(
+		EXTENDS_OR_EXTENSION_OF classOrExtensionTypeIdentifier
+		(
+			',' classOrExtensionTypeIdentifier
+		)*
+	)? CURL_BRACK_OPEN classBody CURL_BRACK_CLOSE
+	;
+
 type:
-	primitiveType
-	| classType
-	| nullableType
+	PRIMITIVE_TYPES
+	| classOrExtensionTypeIdentifier
 	;
 
-// Check this rule.
-initializer:
-	IDENTIFIER ASSIGN (
-		IDENTIFIER
-		| INT_LITERAL
-		| DOUBLE_LITERAL
-		| HEX_LITERAL
-		| STRING_LITERAL
-		| BOOL_LITERAL
-		| newObjDeclaration
-	) SEMICOLON
-	| IDENTIFIER ASSIGN (
-		IDENTIFIER
-		| INT_LITERAL
-		| DOUBLE_LITERAL
-		| HEX_LITERAL
-		| STRING_LITERAL
-		| BOOL_LITERAL
-		| NULL_LITERAL
-		| newObjDeclaration
-	) SEMICOLON
-	;
-
-nonPrimitiveTypes:
-	classType
-	| classType QuestionMark
-	;
-
-typeList:
-	nonPrimitiveTypes+
-	;
-
-typeParameters: (type COMMA)+
-	;
-
-classDeclaration:
-	CLASS IDENTIFIER typeParameters? (EXTENDS typeList)? (
-		IMPLEMENTS typeList
-	)? classBody
-	;
-
-classBody:
-	CURL_BRACK_OPEN classBodyDeclaration CURL_BRACK_OPEN
-	;
-
-classBodyDeclaration:
-	;
-
-// TODO: Fix this newObjDeclaration rule
-newObjDeclaration:
-	CLASS classType EXTENDS?
-	;
-
-nullableType: (primitiveType | classType) QuestionMark
-	;
-
-primitiveType:
-	INT
-	| DOUBLE
-	| BOOL
-	;
-
-// TODO: Fix this classType rule.
-classType:
-	STRING
-	| IDENTIFIER
+classOrExtensionTypeIdentifier:
+	CAPITAL_LETTER
+	| CAPITAL_LETTER IDENTIFIER
 	;
