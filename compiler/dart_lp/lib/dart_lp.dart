@@ -42,8 +42,7 @@ class AgohyaDartPhaseCompiler {
     }
 
     for (Token token in tokens) {
-      // token.
-      print(token.toString());
+      print('${token.type == AgohyaLexer.TOKEN_IDENTIFIER}: ${token.text}');
     }
   }
 
