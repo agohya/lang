@@ -1,2 +1,0 @@
-D:/agohya/lang/build/CMakeFiles/ALL_BUILD.dir
-D:/agohya/lang/build/CMakeFiles/ZERO_CHECK.dir

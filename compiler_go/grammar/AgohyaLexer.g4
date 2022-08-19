@@ -309,10 +309,6 @@ FOR:
 	'for'
 	;
 
-FUNCTION:
-	'Function'
-	;
-
 IF:
 	'if'
 	;
